@@ -15,18 +15,22 @@ export class PudMap {
      * Returns the era (tileset) of the map. Checks ERAX first, then ERA.
      */
     public get era(): TERRAIN_TYPES {
-        const erax = this.pud.getSection(SectionEraX);
+        const erax = this.pud.getSectionByName("ERAX") as
+            | SectionEraX
+            | undefined;
         if (erax) return erax.terrainId as TERRAIN_TYPES;
 
-        const era = this.pud.getSection(SectionEra);
+        const era = this.pud.getSectionByName("ERA ") as SectionEra | undefined;
         if (era) return era.terrainId as TERRAIN_TYPES;
 
         return TERRAIN_TYPES.FOREST;
     }
 
     public set era(value: TERRAIN_TYPES) {
-        // Try ERAX first (often used), then ERA.
-        const erax = this.pud.getSection(SectionEraX);
+        // Try ERAX first if it exists, then ERA.
+        const erax = this.pud.getSectionByName("ERAX") as
+            | SectionEraX
+            | undefined;
         if (erax) {
             erax.terrainId = value;
         } else {
@@ -37,7 +41,9 @@ export class PudMap {
     }
 
     public get dimensions(): { width: number; height: number } {
-        const dim = this.pud.getSection(SectionDimensions);
+        const dim = this.pud.getSectionByName("DIM ") as
+            | SectionDimensions
+            | undefined;
         return {
             width: dim?.width ?? 0,
             height: dim?.height ?? 0,

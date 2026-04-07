@@ -17,6 +17,69 @@ import { SectionAI } from "../sections/SectionAI";
 import { SectionAllowed } from "../sections/SectionAllowed";
 import type { PudUnitEntry } from "./PudUnitEntry";
 
+const UNIT_ALOW_BIT_MAP: Partial<Record<UNIT_TYPES, number>> = {
+    [UNIT_TYPES.FOOTMAN]: 0,
+    [UNIT_TYPES.GRUNT]: 0,
+    [UNIT_TYPES.PEASANT]: 1,
+    [UNIT_TYPES.PEON]: 1,
+    [UNIT_TYPES.BALLISTA]: 2,
+    [UNIT_TYPES.CATAPULT]: 2,
+    [UNIT_TYPES.KNIGHT]: 3,
+    [UNIT_TYPES.OGRE]: 3,
+    [UNIT_TYPES.ARCHER]: 4,
+    [UNIT_TYPES.TROLL_AXETHROWER]: 4,
+    [UNIT_TYPES.MAGE]: 5,
+    [UNIT_TYPES.DEATH_KNIGHT]: 5,
+    [UNIT_TYPES.HUMAN_TANKER]: 6,
+    [UNIT_TYPES.ORC_TANKER]: 6,
+    [UNIT_TYPES.ELVEN_DESTROYER]: 7,
+    [UNIT_TYPES.TROLL_DESTROYER]: 7,
+    [UNIT_TYPES.HUMAN_TRANSPORT]: 8,
+    [UNIT_TYPES.ORC_TRANSPORT]: 8,
+    [UNIT_TYPES.BATTLESHIP]: 9,
+    [UNIT_TYPES.JUGGERNAUGHT]: 9,
+    [UNIT_TYPES.GNOMISH_SUBMARINE]: 10,
+    [UNIT_TYPES.GIANT_TURTLE]: 10,
+    [UNIT_TYPES.GNOMISH_FLYING_MACHINE]: 11,
+    [UNIT_TYPES.GOBLIN_ZEPPLIN]: 11,
+    [UNIT_TYPES.GRYPHON_RIDER]: 12,
+    [UNIT_TYPES.DRAGON]: 12,
+    [UNIT_TYPES.DWARVEN_DEMOLITION_SQUAD]: 14,
+    [UNIT_TYPES.GOBLIN_SAPPER]: 14,
+    [UNIT_TYPES.GRYPHON_AVIARY]: 15,
+    [UNIT_TYPES.DRAGON_ROOST]: 15,
+    [UNIT_TYPES.FARM]: 16,
+    [UNIT_TYPES.PIG_FARM]: 16,
+    [UNIT_TYPES.HUMAN_BARRACKS]: 17,
+    [UNIT_TYPES.ORC_BARRACKS]: 17,
+    [UNIT_TYPES.ELVEN_LUMBER_MILL]: 18,
+    [UNIT_TYPES.TROLL_LUMBER_MILL]: 18,
+    [UNIT_TYPES.STABLES]: 19,
+    [UNIT_TYPES.OGRE_MOUND]: 19,
+    [UNIT_TYPES.MAGE_TOWER]: 20,
+    [UNIT_TYPES.TEMPLE_OF_THE_DAMNED]: 20,
+    [UNIT_TYPES.HUMAN_FOUNDRY]: 21,
+    [UNIT_TYPES.ORC_FOUNDRY]: 21,
+    [UNIT_TYPES.HUMAN_REFINERY]: 22,
+    [UNIT_TYPES.ORC_REFINERY]: 22,
+    [UNIT_TYPES.GNOMISH_INVENTOR]: 23,
+    [UNIT_TYPES.GOBLIN_ALCHEMIST]: 23,
+    [UNIT_TYPES.CHURCH]: 24,
+    [UNIT_TYPES.ALTAR_OF_STORMS]: 24,
+    [UNIT_TYPES.SCOUT_TOWER]: 25,
+    [UNIT_TYPES.WATCH_TOWER]: 25,
+    [UNIT_TYPES.TOWN_HALL]: 26,
+    [UNIT_TYPES.GREAT_HALL]: 26,
+    [UNIT_TYPES.KEEP]: 27,
+    [UNIT_TYPES.STRONGHOLD]: 27,
+    [UNIT_TYPES.CASTLE]: 28,
+    [UNIT_TYPES.FORTRESS]: 28,
+    [UNIT_TYPES.HUMAN_BLACKSMITH]: 29,
+    [UNIT_TYPES.ORC_BLACKSMITH]: 29,
+    [UNIT_TYPES.HUMAN_SHIPYARD]: 30,
+    [UNIT_TYPES.ORC_SHIPYARD]: 30,
+};
+
 export class PudPlayer {
     constructor(
         private readonly pud: Pud,
@@ -137,29 +200,35 @@ export class PudPlayer {
      * Checks if a specific unit is allowed to be built by this player.
      */
     public isUnitAllowed(unitType: UNIT_TYPES): boolean {
-        const section = this.pud.getSection(SectionAllowed);
+        const bitIndex = UNIT_ALOW_BIT_MAP[unitType];
+        if (bitIndex === undefined) return true; // Default allowed if not mapped
+
+        const section = this.pud.getSectionByName("ALOW") as SectionAllowed;
         if (!section) return true; // Default allowed
         return section
             .getPlayer(this.id)
-            .allowedUnitsAndBuildings.getFlag(unitType);
+            .allowedUnitsAndBuildings.getFlag(bitIndex);
     }
 
     /**
      * Allows or disallows a specific unit.
      */
     public setUnitAllowed(unitType: UNIT_TYPES, allowed: boolean): void {
+        const bitIndex = UNIT_ALOW_BIT_MAP[unitType];
+        if (bitIndex === undefined) return; // Ignore if not mapped
+
         const section = this.pud.getSection(SectionAllowed);
         if (!section) throw new Error("ALOW section missing");
         section
             .getPlayer(this.id)
-            .allowedUnitsAndBuildings.setFlag(unitType, allowed);
+            .allowedUnitsAndBuildings.setFlag(bitIndex, allowed);
     }
 
     /**
      * Checks if a user has access to a specific spell.
      */
     public isSpellAllowed(spell: SPELL_NAMES): boolean {
-        const section = this.pud.getSection(SectionAllowed);
+        const section = this.pud.getSectionByName("ALOW") as SectionAllowed;
         if (!section) return true;
 
         const spellAccess = section.getPlayer(this.id)
@@ -183,7 +252,7 @@ export class PudPlayer {
      * Checks if a specific upgrade is allowed.
      */
     public isUpgradeAllowed(upgrade: UPGRADE_NAMES): boolean {
-        const section = this.pud.getSection(SectionAllowed);
+        const section = this.pud.getSectionByName("ALOW") as SectionAllowed;
         if (!section) return true;
 
         const upgradeAccess = section.getPlayer(this.id)

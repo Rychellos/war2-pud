@@ -3,7 +3,7 @@ import type { PudPlayer } from "./PudPlayer";
 export type PlayerList = {
     red: PudPlayer;
     blue: PudPlayer;
-    pink: PudPlayer;
+    green: PudPlayer;
     violet: PudPlayer;
     orange: PudPlayer;
     black: PudPlayer;

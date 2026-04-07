@@ -6,9 +6,11 @@ import { TERRAIN_TYPES } from "../src/enums";
 describe("Real PUD Files Integration", () => {
     it("should load human1.pud correctly", async () => {
         const buffer = await readFile("test/puds/human1.pud");
-        const pud = Pud.fromPudBytes(buffer.buffer as ArrayBuffer)._unsafeUnwrap();
+        const pud = Pud.fromPudBytes(
+            buffer.buffer as ArrayBuffer,
+        )._unsafeUnwrap();
 
-        expect(pud.mapType.trim()).toBe("WAR2 MAP");
+        expect((pud.mapType || "").trim()).toBe("WAR2 MAP");
         expect(pud.version).toBe(0x11);
         expect(pud.map.width).toBe(32);
         expect(pud.map.height).toBe(32);
@@ -23,9 +25,11 @@ describe("Real PUD Files Integration", () => {
 
     it("should load orc26-ex.pud correctly", async () => {
         const buffer = await readFile("test/puds/orc26-ex.pud");
-        const pud = Pud.fromPudBytes(buffer.buffer as ArrayBuffer)._unsafeUnwrap();
+        const pud = Pud.fromPudBytes(
+            buffer.buffer as ArrayBuffer,
+        )._unsafeUnwrap();
 
-        expect(pud.mapType.trim()).toBe("WAR2 MAP");
+        expect((pud.mapType || "").trim()).toBe("WAR2 MAP");
         expect(pud.version).toBe(0x11);
         expect(pud.map.width).toBe(128);
         expect(pud.map.height).toBe(128);
@@ -38,19 +42,23 @@ describe("Real PUD Files Integration", () => {
     });
 
     it("should handle old version puds (orc1.pud)", async () => {
-        const buffer = await readFile("pudReader - old ver/orc1.pud");
-        const pud = Pud.fromPudBytes(buffer.buffer as ArrayBuffer)._unsafeUnwrap();
+        const buffer = await readFile("test/puds/orc1.pud");
+        const pud = Pud.fromPudBytes(
+            buffer.buffer as ArrayBuffer,
+        )._unsafeUnwrap();
 
-        expect(pud.mapType.trim()).toBe("WAR2 MAP");
+        expect((pud.mapType || "").trim()).toBe("WAR2 MAP");
         expect(pud.map.width).toBe(32);
         expect(pud.map.height).toBe(32);
     });
 
     it("should load human2.pud correctly", async () => {
-        const buffer = await readFile("pudReader - old ver/human2.pud");
-        const pud = Pud.fromPudBytes(buffer.buffer as ArrayBuffer)._unsafeUnwrap();
+        const buffer = await readFile("test/puds/human2.pud");
+        const pud = Pud.fromPudBytes(
+            buffer.buffer as ArrayBuffer,
+        )._unsafeUnwrap();
 
-        expect(pud.mapType.trim()).toBe("WAR2 MAP");
+        expect((pud.mapType || "").trim()).toBe("WAR2 MAP");
         expect(pud.map.width).toBe(64);
         expect(pud.map.height).toBe(64);
     });

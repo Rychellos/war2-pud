@@ -58,13 +58,32 @@ export class SectionUnitData extends PudStaticSection {
     }
 
     public static fromBytes(bytes: Uint8Array, offset = 0) {
-        return super.fromBytesInternal(
+        const view = new DataView(bytes.buffer, bytes.byteOffset + offset);
+        const originalLength = view.getUint32(4, true);
+
+        const result = super.fromBytesInternal(
             SECTION_DIMENSIONS_CODE,
             SECTION_DIMENSIONS_LENGTH,
             SectionUnitData,
             bytes,
             offset,
         );
+
+        if (result.isOk() && originalLength < SECTION_DIMENSIONS_LENGTH) {
+            result.value.applyDefaultsToSwampGrps();
+        }
+
+        return result;
+    }
+
+    public applyDefaultsToSwampGrps() {
+        for (let i = 0; i < NUM_GRP_FILES; i++) {
+            this._view.setUint16(
+                UDTA_BYTE_OFFSETS.GRP_IDS_TO_LOAD_SWAMP + i * 2,
+                DEFAULT_UNIT_DATA.swampGRPIds[i],
+                true,
+            );
+        }
     }
 
     public get useDefault() {

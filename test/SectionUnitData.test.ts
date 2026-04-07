@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { SectionUnitData } from "../src/sections/SectionUnitData";
 import { getSection } from "./helpers";
+import { DEFAULT_UNIT_DATA } from "../src/constants/DefaultUnitData";
 
 describe("SectionUnitData", () => {
     it("should instantiate with correct name", async () => {
@@ -187,7 +188,9 @@ describe("SectionUnitData", () => {
         expect(section.useDefault).toBe(false);
 
         // Accessing data far beyond 100 bytes (e.g., grpsIdsToLoadSwamp) should return zeros and not crash
-        expect(section.grpsIdsToLoadSwamp[0]).toBe(0);
+        expect(section.grpsIdsToLoadSwamp[0]).toBe(
+            DEFAULT_UNIT_DATA.swampGRPIds[0],
+        );
 
         // Setting values in the padded area should work and persist
         section.grpsIdsToLoadSwamp[0] = 0x1234;

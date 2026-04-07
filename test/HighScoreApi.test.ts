@@ -13,9 +13,7 @@ import path from "path";
 
 describe("High-Level API (Views)", () => {
     it("should provide easy access to PUD Map metadata", async () => {
-        const fileBytes = await readFile(
-            path.join(__dirname, "puds", "human1.pud"),
-        );
+        const fileBytes = await readFile("test/puds/human1.pud");
         const pud = Pud.fromPudBytes(fileBytes.buffer)._unsafeUnwrap();
 
         expect(pud.mapType.trim()).toBe("WAR2 MAP");
@@ -31,9 +29,7 @@ describe("High-Level API (Views)", () => {
     });
 
     it("should provide easy access to PUD Player data", async () => {
-        const fileBytes = await readFile(
-            path.join(__dirname, "..", "pudReader - old ver", "orc1.pud"),
-        );
+        const fileBytes = await readFile("test/puds/orc1.pud");
         const pud = Pud.fromPudBytes(fileBytes.buffer)._unsafeUnwrap();
 
         // Player 0 (Red)

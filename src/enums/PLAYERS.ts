@@ -1,7 +1,7 @@
 export enum PLAYERS {
     RED,
     BLUE,
-    PINK,
+    GREEN,
     VIOLET,
     ORANGE,
     BLACK,
@@ -15,5 +15,5 @@ export enum PLAYERS {
     UNUSED_13,
     UNUSED_14,
     NEUTRAL,
-    LENGTH,
+    LENGTH = 16,
 }

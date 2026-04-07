@@ -28,10 +28,28 @@ import { PudSection } from "./sections/base/PudSection";
 import { HEADER_LENGTH } from "./sections/types";
 import { PlayerList } from "./views/types";
 
+const SECTION_REGISTRY = [
+    { name: "TYPE", length: 24, Constructor: SectionType },
+    { name: "VER ", length: 2, Constructor: SectionVersion },
+    { name: "DESC", length: 32, Constructor: SectionDescription },
+    { name: "OWNR", length: 16, Constructor: SectionOwners },
+    { name: "ERA ", length: 2, Constructor: SectionEra },
+    { name: "ERAX", length: 2, Constructor: SectionEraX },
+    { name: "DIM ", length: 4, Constructor: SectionDimensions },
+    { name: "UDTA", length: 5950, Constructor: SectionUnitData },
+    { name: "ALOW", length: 384, Constructor: SectionAllowed },
+    { name: "UGRD", length: 782, Constructor: SectionUpgrades },
+    { name: "SIDE", length: 16, Constructor: SectionSide },
+    { name: "SGLD", length: 32, Constructor: SectionStartingGold },
+    { name: "SLBR", length: 32, Constructor: SectionStartingLumber },
+    { name: "SOIL", length: 32, Constructor: SectionStartingOil },
+    { name: "AIPL", length: 16, Constructor: SectionAI },
+] as const;
+
 export const PLAYER_NAMES = [
     "red",
     "blue",
-    "pink",
+    "green",
     "violet",
     "orange",
     "black",
@@ -254,6 +272,28 @@ export class Pud {
             if (section instanceof SectionClass) {
                 return section;
             }
+        }
+
+        const registryEntry = SECTION_REGISTRY.find(
+            (entry) => (entry.Constructor as any) === SectionClass,
+        );
+
+        if (registryEntry) {
+            this.initSection(
+                registryEntry.name,
+                registryEntry.length,
+                SectionClass,
+            );
+
+            const newSection = this.sections.get(registryEntry.name);
+
+            if (newSection && "applyDefaults" in newSection) {
+                (
+                    newSection as PudSection & { applyDefaults(): void }
+                ).applyDefaults();
+            }
+
+            return newSection as T;
         }
 
         return undefined;
