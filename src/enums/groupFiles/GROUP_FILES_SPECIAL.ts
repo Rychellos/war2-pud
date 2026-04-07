@@ -1,0 +1,22 @@
+export enum GROUP_FILES_SPECIAl {
+    // special peon units
+    NONE,
+    H_PEONL_INDEX = 0, // fixup runtime  = NUM_UNIT_TYPES,
+    O_PEONL_INDEX,
+    H_PEONG_INDEX,
+    O_PEONG_INDEX,
+    H_TANKERO_INDEX,
+    O_TANKERO_INDEX,
+
+    // construction frames for buildings
+    GENERIC_BUILD_GRP_INDEX,
+    SHIPYARD_H1_GRP_INDEX,
+    SHIPYARD_O1_GRP_INDEX,
+    OILRIG_H1_GRP_INDEX,
+    OILRIG_O1_GRP_INDEX,
+    REFINERY_H1_GRP_INDEX,
+    REFINERY_O1_GRP_INDEX,
+    FOUNDRY_H1_GRP_INDEX,
+    FOUNDRY_O1_GRP_INDEX,
+    WALL_BUILD_GRP_INDEX,
+}
