@@ -6,7 +6,6 @@ import { SpellsCurrentlyResearched } from "./allowed/SpellsCurrentlyResearched";
 import { PudStaticSection } from "./base/PudStaticSection";
 import { UpgradesCurrentlyResearched } from "./allowed/UpgradesCurrentlyResearched";
 import { PLAYERS } from "../enums";
-import { HEADER_LENGTH } from "./types";
 
 const SECTION_ALLOWED_CODE = "ALOW";
 const SECTION_ALLOWED_LENGTH = 384;
@@ -30,27 +29,27 @@ export class SectionAllowed extends PudStaticSection {
         return {
             allowedUnitsAndBuildings: new AllowedUnitsAndBuildingFlagReader(
                 this.data,
-                HEADER_LENGTH + index * 4,
+                index * 4,
             ),
             spellsAtStart: new SpellsAtStartFlagReader(
                 this.data,
-                HEADER_LENGTH + PLAYERS.LENGTH * 4 + index * 4,
+                PLAYERS.LENGTH * 4 + index * 4,
             ),
             allowedSpells: new AllowedSpellsFlagReader(
                 this.data,
-                HEADER_LENGTH + PLAYERS.LENGTH * 4 * 2 + index * 4,
+                PLAYERS.LENGTH * 4 * 2 + index * 4,
             ),
             spellsCurrentlyResearched: new SpellsCurrentlyResearched(
                 this.data,
-                HEADER_LENGTH + PLAYERS.LENGTH * 4 * 3 + index * 4,
+                PLAYERS.LENGTH * 4 * 3 + index * 4,
             ),
             allowedUpgrades: new UpgradesAllowedFlagReader(
                 this.data,
-                HEADER_LENGTH + PLAYERS.LENGTH * 4 * 4 + index * 4,
+                PLAYERS.LENGTH * 4 * 4 + index * 4,
             ),
             upgradesCurrentlyResearched: new UpgradesCurrentlyResearched(
                 this.data,
-                HEADER_LENGTH + PLAYERS.LENGTH * 4 * 5 + index * 4,
+                PLAYERS.LENGTH * 4 * 5 + index * 4,
             ),
         };
     }
