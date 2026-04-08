@@ -1,11 +1,11 @@
 import { describe, it, expect } from "vitest";
-import { readFile } from "fs/promises";
+import { readFileSync } from "fs";
 import { Pud } from "../src/index";
 import { TERRAIN_TYPES } from "../src/enums";
 
 describe("Real PUD Files Integration", () => {
-    it("should load human1.pud correctly", async () => {
-        const buffer = await readFile("test/puds/human1.pud");
+    it("should load human1.pud correctly", () => {
+        const buffer = readFileSync("test/puds/human1.pud");
         const pud = Pud.fromPudBytes(
             buffer.buffer as ArrayBuffer,
         )._unsafeUnwrap();
@@ -23,8 +23,8 @@ describe("Real PUD Files Integration", () => {
         expect(pud.map.tiles.length).toBe(32 * 32);
     });
 
-    it("should load orc26-ex.pud correctly", async () => {
-        const buffer = await readFile("test/puds/orc26-ex.pud");
+    it("should load orc26-ex.pud correctly", () => {
+        const buffer = readFileSync("test/puds/orc26-ex.pud");
         const pud = Pud.fromPudBytes(
             buffer.buffer as ArrayBuffer,
         )._unsafeUnwrap();
@@ -41,8 +41,8 @@ describe("Real PUD Files Integration", () => {
         expect(pud.unitData?.dataLength).toBe(5950);
     });
 
-    it("should handle old version puds (orc1.pud)", async () => {
-        const buffer = await readFile("test/puds/orc1.pud");
+    it("should handle old version puds (orc1.pud)", () => {
+        const buffer = readFileSync("test/puds/orc1.pud");
         const pud = Pud.fromPudBytes(
             buffer.buffer as ArrayBuffer,
         )._unsafeUnwrap();
@@ -52,8 +52,8 @@ describe("Real PUD Files Integration", () => {
         expect(pud.map.height).toBe(32);
     });
 
-    it("should load human2.pud correctly", async () => {
-        const buffer = await readFile("test/puds/human2.pud");
+    it("should load human2.pud correctly", () => {
+        const buffer = readFileSync("test/puds/human2.pud");
         const pud = Pud.fromPudBytes(
             buffer.buffer as ArrayBuffer,
         )._unsafeUnwrap();

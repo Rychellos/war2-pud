@@ -15,12 +15,11 @@ A cross-platform TypeScript library for parsing, manipulating, and generating Wa
 
 ## Installation
 
-Using `pnpm`, `npm`, or `yarn`:
+Using `npm` or `pnpm`:
 
 ```bash
-pnpm install war2-pud
 npm install war2-pud
-yarn add war2-pud
+pnpm install war2-pud
 ```
 
 ## Basic Usage
@@ -103,10 +102,10 @@ import { Pud, TERRAIN_TYPES } from "war2-pud";
 // Create a 64x64 FOREST map
 const newMap = new Pud(64, 64, TERRAIN_TYPES.FOREST);
 
-newMap.description = "A brand new battlefield.";
+newMap.description = "New map.";
 
 const rawPudData = newMap.toBinary();
-// Save rawPudData to a file or send to a client
+// Get raw bytes of a pud file
 ```
 
 ## Advanced Usage

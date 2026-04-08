@@ -4,8 +4,8 @@ import { getSection } from "./helpers";
 import { DEFAULT_UNIT_DATA } from "../src/constants/DefaultUnitData";
 
 describe("SectionUnitData", () => {
-    it("should instantiate with correct name", async () => {
-        const section = await getSection(
+    it("should instantiate with correct name", () => {
+        const section = getSection(
             "test/sections/section_udta.bin",
             SectionUnitData.fromBytes,
         );
@@ -13,8 +13,8 @@ describe("SectionUnitData", () => {
         expect(section.name).toBe("UDTA");
     });
 
-    it("should get and set useDefault", async () => {
-        const section = await getSection(
+    it("should get and set useDefault", () => {
+        const section = getSection(
             "test/sections/section_udta.bin",
             SectionUnitData.fromBytes,
         );
@@ -26,8 +26,8 @@ describe("SectionUnitData", () => {
         expect(section.useDefault).toBe(false);
     });
 
-    it("should access typed arrays correctly", async () => {
-        const section = await getSection(
+    it("should access typed arrays correctly", () => {
+        const section = getSection(
             "test/sections/section_udta.bin",
             SectionUnitData.fromBytes,
         );
@@ -60,8 +60,8 @@ describe("SectionUnitData", () => {
         expect(section.magic[1]).toBe(255);
     });
 
-    it("should access object arrays correctly", async () => {
-        const section = await getSection(
+    it("should access object arrays correctly", () => {
+        const section = getSection(
             "test/sections/section_udta.bin",
             SectionUnitData.fromBytes,
         );
@@ -87,8 +87,8 @@ describe("SectionUnitData", () => {
     });
 
     describe("PudUnitDataView", () => {
-        it("should correctly proxy primitive properties", async () => {
-            const section = await getSection(
+        it("should correctly proxy primitive properties", () => {
+            const section = getSection(
                 "test/sections/section_udta.bin",
                 SectionUnitData.fromBytes,
             );
@@ -123,8 +123,8 @@ describe("SectionUnitData", () => {
             expect(section.pointValues[5]).toBe(75);
         });
 
-        it("should correctly proxy complex properties", async () => {
-            const section = await getSection(
+        it("should correctly proxy complex properties", () => {
+            const section = getSection(
                 "test/sections/section_udta.bin",
                 SectionUnitData.fromBytes,
             );
@@ -143,8 +143,8 @@ describe("SectionUnitData", () => {
             expect(unit.unitFlags).toBe(section.unitFlags[10]);
         });
 
-        it("should handle secondMouseAction bounds", async () => {
-            const section = await getSection(
+        it("should handle secondMouseAction bounds", () => {
+            const section = getSection(
                 "test/sections/section_udta.bin",
                 SectionUnitData.fromBytes,
             );
@@ -161,7 +161,7 @@ describe("SectionUnitData", () => {
         });
     });
 
-    it("should handle truncated UDTA section by padding with zeros", async () => {
+    it("should handle truncated UDTA section by padding with zeros", () => {
         // Create a short UDTA section (header + 100 bytes of data)
         const headerLength = 8;
         const shortDataLength = 100;

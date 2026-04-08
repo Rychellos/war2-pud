@@ -1,6 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { readFile } from "fs/promises";
-import path from "path";
+import { readFileSync } from "fs";
 
 import { Pud } from "../src/index";
 import { UNIT_TYPES } from "../src/enums/index";
@@ -23,10 +22,8 @@ describe("Pud Unit Management", () => {
         // Let's use a real PUD from the project for a more robust test.
     });
 
-    it("should add and remove units from a real PUD", async () => {
-        const pudBuffer = await readFile(
-            path.join(__dirname, "puds/human1.pud"),
-        );
+    it("should add and remove units from a real PUD", () => {
+        const pudBuffer = readFileSync("test/puds/human1.pud");
         const pud = Pud.fromPudBytes(pudBuffer.buffer)._unsafeUnwrap();
 
         const initialCount = pud.units.length;

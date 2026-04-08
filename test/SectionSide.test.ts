@@ -3,8 +3,8 @@ import { SectionSide } from "../src/sections/SectionSide";
 import { getSection } from "./helpers";
 import { PLAYER_SIDES, PLAYERS } from "../src/enums";
 
-test("Test section SIDE", async () => {
-    const section = await getSection(
+test("Test section SIDE", () => {
+    const section = getSection(
         "test/sections/section_side.bin",
         SectionSide.fromBytes,
     );

@@ -1,14 +1,14 @@
 import { Ok, Result } from "neverthrow";
 import { HEADER_LENGTH } from "../src/sections/types";
-import { readFile } from "fs/promises";
+import { readFileSync } from "fs";
 import { expect } from "vitest";
 import { PudSection } from "../src/sections/base/PudSection";
 
-export async function getSection<T extends PudSection>(
+export function getSection<T extends PudSection>(
     testFilePath: string,
     constructorFunction: (bytes: Uint8Array) => Result<T, Error>,
 ) {
-    const data = await readFile(testFilePath);
+    const data = new Uint8Array(readFileSync(testFilePath));
 
     const sectionCreationResult = constructorFunction(data);
 

@@ -4,10 +4,10 @@ import { expect, test } from "vitest";
 import { HEADER_LENGTH } from "../src/sections/types";
 import { PUD_VERSION } from "../src/enums/PUD_VERSION";
 
-test("Test section VER ", async () => {
+test("Test section VER ", () => {
     const TEST_VERSION = PUD_VERSION.WITH_HEROES;
 
-    const section = await getSection(
+    const section = getSection(
         "test/sections/section_ver .bin",
         SectionVersion.fromBytes,
     );

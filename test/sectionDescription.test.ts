@@ -3,10 +3,10 @@ import { SectionDescription } from "../src/sections/SectionDescription";
 import { expect, test } from "vitest";
 import { HEADER_LENGTH } from "../src/sections/types";
 
-test("Test section DESC", async () => {
+test("Test section DESC", () => {
     const TEST_DESCRIPTION = "The quick brown fox jumps over the lazy dog.";
 
-    const section = await getSection(
+    const section = getSection(
         "test/sections/section_desc.bin",
         SectionDescription.fromBytes,
     );
@@ -18,7 +18,7 @@ test("Test section DESC", async () => {
 
     section.description = TEST_DESCRIPTION;
 
-    const expectedDescription = TEST_DESCRIPTION.slice(0, 32); 
+    const expectedDescription = TEST_DESCRIPTION.slice(0, 32);
     expect(section.description).toBe(expectedDescription);
     expect(section.description.length).toBe(expectedDescription.length);
 

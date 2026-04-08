@@ -3,8 +3,8 @@ import { test, expect } from "vitest";
 import { SectionOwners } from "../src/sections/SectionOwners";
 import { getSection } from "./helpers";
 
-test("Test section OWNR", async () => {
-    const section = await getSection(
+test("Test section OWNR", () => {
+    const section = getSection(
         "test/sections/section_ownr.bin",
         SectionOwners.fromBytes,
     );

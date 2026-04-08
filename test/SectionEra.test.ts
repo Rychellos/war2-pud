@@ -4,8 +4,8 @@ import { getSection } from "./helpers";
 import { TERRAIN_TYPES } from "../src/enums";
 
 describe("SectionEra", () => {
-    it("should instantiate with correct code", async () => {
-        const section = await getSection(
+    it("should instantiate with correct code", () => {
+        const section = getSection(
             "test/sections/section_era .bin",
             SectionEra.fromBytes,
         );
@@ -13,8 +13,8 @@ describe("SectionEra", () => {
         expect(section.name).toBe("ERA ");
     });
 
-    it("should get and set terrainId correctly", async () => {
-        const section = await getSection(
+    it("should get and set terrainId correctly", () => {
+        const section = getSection(
             "test/sections/section_era .bin",
             SectionEra.fromBytes,
         );
@@ -28,7 +28,7 @@ describe("SectionEra", () => {
         expect(section.terrainId).toBe(TERRAIN_TYPES.SWAMP);
     });
 
-    it("should construct from bytes", async () => {
+    it("should construct from bytes", () => {
         const buffer = new ArrayBuffer(10);
         const view = new DataView(buffer);
         // "ERA " is 0x45 0x52 0x41 0x20

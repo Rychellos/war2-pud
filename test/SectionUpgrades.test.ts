@@ -2,8 +2,8 @@ import { test, expect } from "vitest";
 import { SectionUpgrades } from "../src/sections/SectionUpgrades";
 import { getSection } from "./helpers";
 
-test("Test section UGRD", async () => {
-    const section = await getSection<SectionUpgrades>(
+test("Test section UGRD", () => {
+    const section = getSection<SectionUpgrades>(
         "test/sections/section_ugrd.bin",
         SectionUpgrades.fromBytes,
     );

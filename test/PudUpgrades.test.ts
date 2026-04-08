@@ -1,12 +1,11 @@
 import { describe, it, expect } from "vitest";
 import { Pud } from "../src/index";
-import { getSection } from "./helpers";
 import { SectionUpgrades } from "../src/sections/SectionUpgrades";
-import * as fs from "fs";
+import { readFileSync } from "fs";
 
 describe("PudUpgrades View", () => {
-    it("should provide easy access to upgrades through the Pud class", async () => {
-        const bytes = fs.readFileSync("test/sections/section_ugrd.bin");
+    it("should provide easy access to upgrades through the Pud class", () => {
+        const bytes = readFileSync("test/sections/section_ugrd.bin");
         const pud = Pud.fromPudBytes(bytes)._unsafeUnwrap();
 
         const upgrades = pud.upgrades;

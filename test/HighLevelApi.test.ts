@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { readFile } from "fs/promises";
+import { readFileSync } from "fs";
 import { Pud } from "../src/index";
 import {
     PLAYER_CONTROLLER,
@@ -9,14 +9,13 @@ import {
     SPELL_NAMES,
     UPGRADE_NAMES,
 } from "../src/enums";
-import path from "path";
 
 describe("High-Level API (Views)", () => {
-    it("should provide easy access to PUD Map metadata", async () => {
-        const fileBytes = await readFile("test/puds/human1.pud");
+    it("should provide easy access to PUD Map metadata", () => {
+        const fileBytes = readFileSync("test/puds/human1.pud");
         const pud = Pud.fromPudBytes(fileBytes.buffer)._unsafeUnwrap();
 
-        expect(pud.mapType.trim()).toBe("WAR2 MAP");
+        expect((pud.mapType || "").trim()).toBe("WAR2 MAP");
         expect(pud.version).toBe(0x11);
 
         expect(pud.map.era).toBe(TERRAIN_TYPES.WINTER);
@@ -28,8 +27,8 @@ describe("High-Level API (Views)", () => {
         expect(pud.map.actionBits.length).toBe(32 * 32);
     });
 
-    it("should provide easy access to PUD Player data", async () => {
-        const fileBytes = await readFile("test/puds/orc1.pud");
+    it("should provide easy access to PUD Player data", () => {
+        const fileBytes = readFileSync("test/puds/orc1.pud");
         const pud = Pud.fromPudBytes(fileBytes.buffer)._unsafeUnwrap();
 
         // Player 0 (Red)

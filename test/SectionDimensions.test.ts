@@ -2,8 +2,8 @@ import { test, expect } from "vitest";
 import { SectionDimensions } from "../src/sections/SectionDimensions";
 import { getSection } from "./helpers";
 
-test("Test section DIM ", async () => {
-    const section = await getSection(
+test("Test section DIM ", () => {
+    const section = getSection(
         "test/sections/section_dim .bin",
         SectionDimensions.fromBytes,
     );

@@ -2,8 +2,8 @@ import { test, expect } from "vitest";
 import { SectionStartingLumber } from "../src/sections/SectionStartingLumber";
 import { getSection } from "./helpers";
 
-test("Test section SLBR", async () => {
-    const section = await getSection(
+test("Test section SLBR", () => {
+    const section = getSection(
         "test/sections/section_slbr.bin",
         SectionStartingLumber.fromBytes,
     );

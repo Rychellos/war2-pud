@@ -3,10 +3,10 @@ import { SectionType } from "../src/sections/SectionType";
 import { expect, test } from "vitest";
 import { HEADER_LENGTH } from "../src/sections/types";
 
-test("Test section TYPE", async () => {
+test("Test section TYPE", () => {
     const TEST_ID = 21332;
 
-    const section = await getSection(
+    const section = getSection(
         "test/sections/section_type.bin",
         SectionType.fromBytes,
     );
