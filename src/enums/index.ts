@@ -12,3 +12,6 @@ export * from "./RIGHT_CLICK_ACTIONS";
 export * from "./UNIT_DOMAINS";
 export * from "./PLAYER_SIDES";
 export * from "./PLAYERS";
+export * from "./groupFiles";
+export * from "./UNIT_GROUPS";
+export * from "./UNIT_GROUP_MAPPINGS";
