@@ -4,3 +4,4 @@ export * from "./sections/types";
 export * from "./views/PudPlayer";
 export * from "./views/PudMap";
 export * from "./views/PudUpgrades";
+export * from "./constants/DefaultUnitData";
