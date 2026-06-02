@@ -265,6 +265,10 @@ export class Pud {
         }
     }
 
+    public setSection<T extends PudSection>(section: T) {
+        this.sections.set(section.name, section);
+    }
+
     public getSection<T extends PudSection>(
         SectionClass: new (data: ArrayBuffer) => T,
     ): T | undefined {
