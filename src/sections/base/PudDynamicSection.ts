@@ -113,10 +113,6 @@ export class PudDynamicSection<
         element.deleted = true;
         this.freedIndexses.push(index);
 
-        if (this.freedIndexses.length >= this.maxElement / 2) {
-            this.clampData();
-        }
-
         return true;
     }
 
