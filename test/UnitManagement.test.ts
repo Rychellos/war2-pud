@@ -29,10 +29,15 @@ describe("Pud Unit Management", () => {
         const initialCount = pud.units.length;
 
         // Add a unit
-        pud.addUnit(100, 200, UNIT_TYPES.GRUNT, 1, 0);
-        expect(pud.units.length).toBe(initialCount + 1);
+        const newUnit = pud.addUnit(100, 200, UNIT_TYPES.GRUNT, 1, 0);
+        expect(newUnit).toBeDefined();
+        expect(pud.units.length).toBe(initialCount * 2);
 
-        const lastUnit = pud.units[pud.units.length - 1];
+        const newUnitId = pud.getUnitId(newUnit!);
+
+        expect(newUnitId).toBeDefined();
+
+        const lastUnit = pud.units[newUnitId!];
         expect(lastUnit.x).toBe(100);
         expect(lastUnit.y).toBe(200);
         expect(lastUnit.type).toBe(UNIT_TYPES.GRUNT);
@@ -40,6 +45,6 @@ describe("Pud Unit Management", () => {
 
         // Remove the unit
         pud.removeUnit(pud.units.length - 1);
-        expect(pud.units.length).toBe(initialCount);
+        expect(pud.units.length).toBe(initialCount * 2);
     });
 });

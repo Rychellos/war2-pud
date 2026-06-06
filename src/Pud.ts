@@ -265,6 +265,14 @@ export class Pud {
         }
     }
 
+    public getUnitId(unit: PudUnitEntry) {
+        const unitSection = this.getSectionByName("UNIT") as
+            | SectionUnit
+            | undefined;
+
+        return unitSection?.getUnitId(unit) ?? null;
+    }
+
     public setSection<T extends PudSection>(section: T) {
         this.sections.set(section.name, section);
     }

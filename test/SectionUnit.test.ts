@@ -53,8 +53,10 @@ describe("SectionUnit", () => {
         expect(section.units.length).toBe(2);
 
         section.removeUnit(u1);
-        expect(section.units.length).toBe(1);
-        expect(section.units[0]).toBe(u2);
+        expect(section.units.length).toBe(2);
+        expect(section.units[0]).toBe(u1);
+        expect(section.units[0].deleted).toBe(true);
+        expect(section.units[1]).toBe(u2);
     });
 
     it("should grow and shrink buffer", () => {
@@ -67,13 +69,12 @@ describe("SectionUnit", () => {
 
         expect(section.dataLength).toBe(4 * PudUnitEntry.LENGTH);
 
-        // Remove 2 units to cause shrink (clamping)
         const units = section.units;
         section.removeUnit(units[0]);
         section.removeUnit(units[1]);
 
-        // clampData is called when freedIndexses.length >= maxElement / 2
-        // maxElement is 4, freed is 2. 2 >= 2 is true.
+        section.clampData();
+
         expect(section.units.length).toBe(1);
         expect(section.dataLength).toBe(1 * PudUnitEntry.LENGTH);
     });

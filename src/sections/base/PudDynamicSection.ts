@@ -31,6 +31,7 @@ export class PudDynamicSection<
     protected elements: T[] = [];
     private freedIndexes: number[] = [];
     private maxElement = 0;
+    private elementToIdMap = new Map<T, number>();
 
     protected constructor(
         protected entryConstructor: V,
@@ -47,6 +48,8 @@ export class PudDynamicSection<
                 HEADER_LENGTH + i * this.entryConstructor.LENGTH,
                 this.entryConstructor.LENGTH,
             );
+
+            this.elementToIdMap.set(this.elements[i], i);
         }
     }
 
@@ -87,6 +90,8 @@ export class PudDynamicSection<
                 this.entryConstructor.LENGTH,
             );
 
+            this.elementToIdMap.set(this.elements[i], i);
+
             if (firstElement === undefined) {
                 firstElement = this.elements[i];
                 firstElement.deleted = false;
@@ -116,6 +121,10 @@ export class PudDynamicSection<
         return true;
     }
 
+    protected getElementId(element: T) {
+        return this.elementToIdMap.get(element);
+    }
+
     clampData(): void {
         if (this.freedIndexes.length === 0) {
             return;
@@ -141,6 +150,7 @@ export class PudDynamicSection<
                         readOffset + entryLen,
                     );
                 }
+
                 compactedElements.push(el);
                 writeIndex++;
             }
@@ -149,6 +159,7 @@ export class PudDynamicSection<
         this.elements = compactedElements;
         this.freedIndexes = [];
         this.maxElement = this.elements.length;
+        this.elementToIdMap.clear();
 
         const newDataLength = this.maxElement * entryLen;
         const newBufferSize = HEADER_LENGTH + newDataLength;
@@ -163,6 +174,8 @@ export class PudDynamicSection<
                 HEADER_LENGTH + i * entryLen,
                 entryLen,
             );
+
+            this.elementToIdMap.set(this.elements[i], i);
         }
     }
 

@@ -43,6 +43,10 @@ export class SectionUnit extends PudDynamicSection<
         return this.elements as PudUnitEntry[];
     }
 
+    public getUnitId(unit: PudUnitEntry) {
+        return this.getElementId(unit) || null;
+    }
+
     public addUnit(
         x: number,
         y: number,
