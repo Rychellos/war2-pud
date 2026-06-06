@@ -40,9 +40,7 @@ export class SectionUnit extends PudDynamicSection<
     }
 
     public get units() {
-        return this.elements.filter(
-            (el: PudUnitEntry) => !el.deleted,
-        ) as PudUnitEntry[];
+        return this.elements as PudUnitEntry[];
     }
 
     public addUnit(

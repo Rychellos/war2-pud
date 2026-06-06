@@ -29,7 +29,7 @@ export class PudDynamicSection<
     },
 > extends PudSection {
     protected elements: T[] = [];
-    private freedIndexses: number[] = [];
+    private freedIndexes: number[] = [];
     private maxElement = 0;
 
     protected constructor(
@@ -51,8 +51,8 @@ export class PudDynamicSection<
     }
 
     protected addElement(): T {
-        if (this.freedIndexses.length) {
-            const index = this.freedIndexses.shift()!;
+        if (this.freedIndexes.length) {
+            const index = this.freedIndexes.shift()!;
             const el = this.elements[index];
             el.deleted = false;
             return el;
@@ -92,7 +92,7 @@ export class PudDynamicSection<
                 firstElement.deleted = false;
             } else {
                 this.elements[i].deleted = true;
-                this.freedIndexses.push(i);
+                this.freedIndexes.push(i);
             }
         }
 
@@ -111,13 +111,13 @@ export class PudDynamicSection<
         }
 
         element.deleted = true;
-        this.freedIndexses.push(index);
+        this.freedIndexes.push(index);
 
         return true;
     }
 
     clampData(): void {
-        if (this.freedIndexses.length === 0) {
+        if (this.freedIndexes.length === 0) {
             return;
         }
 
@@ -147,7 +147,7 @@ export class PudDynamicSection<
         }
 
         this.elements = compactedElements;
-        this.freedIndexses = [];
+        this.freedIndexes = [];
         this.maxElement = this.elements.length;
 
         const newDataLength = this.maxElement * entryLen;
