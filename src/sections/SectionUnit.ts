@@ -44,7 +44,7 @@ export class SectionUnit extends PudDynamicSection<
     }
 
     public getUnitId(unit: PudUnitEntry) {
-        return this.getElementId(unit) || null;
+        return this.getElementId(unit);
     }
 
     public addUnit(
